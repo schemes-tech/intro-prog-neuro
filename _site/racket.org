@@ -1,0 +1,37 @@
+#+title: racket
+
+* ob racket
+- Supported Header Arguments
+  - :results
+    Can be set to either value or output. If set to value, the code block
+    will be wrapped in a (let …) form, and only the result of the form will
+    recorded. If set to output, the code block will be run as a script, and all
+    standard output will be recorded. Defaults to value.
+  - :lang
+    Specifies the language used in the #lang directive at the beginning of the
+    script. Defaults to “racket”.
+  - :var
+    Allows defining a variable for use in the block. If using the value output
+    type, the variable will be passed to the wrapping function as an argument.
+    Otherwise, it will be defined at the top level of the script using a (define
+    ...) form.
+
+#+begin_src racket :var input=10
+(define (factorial n)
+  (if (= n 1)
+      1
+      (* n (factorial (sub1 n)))))
+(factorial input)
+#+end_src
+
+#+begin_src racket :tangle web.rkt
+#lang web-server/insta
+(define (start request)
+  (response/xexpr
+   '(html
+     (head (title "My Blog"))
+     (body (h1 "Under construction")))))
+#+end_src
+
+* web blog tutorial
+[[https://docs.racket-lang.org/continue/index.html][Continue: Web Applications in Racket]]
